@@ -98,8 +98,8 @@ const ContactPage = () => {
                   <div>
                     <h4 className="font-semibold">Email</h4>
                     <p className="text-gray-600">
-                      <a href="mailto:agnikawach.maharastra@gmail.com">
-                        agnikawach.maharastra@gmail.com
+                      <a href="mailto:agnikawach.maharashtra@gmail.com">
+                        agnikawach.maharashtra@gmail.com
                       </a>
                     </p>
                   </div>
