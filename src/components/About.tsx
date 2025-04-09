@@ -99,6 +99,7 @@ const About = () => {
                   src="/videos/agni-kawach-test.mp4"
                   className="rounded-lg shadow-xl w-full h-full object-cover absolute inset-0 dark:shadow-red-500/5"
                   controls
+                  autoPlay
                   muted
                   playsInline
                 >
