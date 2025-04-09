@@ -39,8 +39,13 @@ export default defineConfig({
     assetsDir: 'assets',
     rollupOptions: {
       output: {
-        manualChunks: undefined
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          ui: ['framer-motion', 'lucide-react']
+        }
       }
-    }
+    },
+    chunkSizeWarningLimit: 1000,
+    target: 'esnext'
   }
 });
