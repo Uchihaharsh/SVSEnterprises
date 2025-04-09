@@ -8,13 +8,33 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  optimizeDeps: {
-    exclude: ['lucide-react'],
+  root: '.',
+  base: './',
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: true,
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+      },
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          ui: ['framer-motion', 'lucide-react']
+        }
+      }
+    },
+    chunkSizeWarningLimit: 1000,
+    target: 'esnext'
   },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
     }
+  },
+  optimizeDeps: {
+    exclude: ['lucide-react']
   },
   server: {
     port: 5173,
@@ -31,21 +51,5 @@ export default defineConfig({
   preview: {
     port: 5173,
     host: true
-  },
-  publicDir: 'public',
-  build: {
-    sourcemap: true,
-    outDir: 'dist',
-    assetsDir: 'assets',
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          ui: ['framer-motion', 'lucide-react']
-        }
-      }
-    },
-    chunkSizeWarningLimit: 1000,
-    target: 'esnext'
   }
 });
