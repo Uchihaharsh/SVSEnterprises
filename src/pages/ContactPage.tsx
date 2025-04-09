@@ -31,10 +31,10 @@ const ContactPage = () => {
         'service_74k6tev', // Service ID
         'template_e8paquj', // Template ID
         {
-          to_email: 'agnikawach.maharastra@gmail.com',
           from_name: formData.name,
-          from_email: formData.email,
+          reply_to: formData.email,
           message: formData.message,
+          to_name: 'SVS Enterprises',
         },
         'YOPEMqoFXLz9tAcJg' // Public Key
       );
