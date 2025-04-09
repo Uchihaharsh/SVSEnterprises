@@ -27,23 +27,25 @@ const ContactPage = () => {
     setStatus({ type: '', message: '' });
 
     try {
-      await emailjs.send(
-        'service_74k6tev', // Service ID
-        'template_e8paquj', // Template ID
-        {
-          from_name: formData.name,
-          reply_to: formData.email,
-          message: formData.message,
-          to_name: 'SVS Enterprises',
-        },
-        'YOPEMqoFXLz9tAcJg' // Public Key
-      );
+      if (typeof window !== 'undefined') {
+        await emailjs.send(
+          'service_74k6tev', // Service ID
+          'template_e8paquj', // Template ID
+          {
+            from_name: formData.name,
+            reply_to: formData.email,
+            message: formData.message,
+            to_name: 'SVS Enterprises',
+          },
+          'YOPEMqoFXLz9tAcJg' // Public Key
+        );
 
-      setStatus({
-        type: 'success',
-        message: 'Thank you! Your message has been sent successfully.'
-      });
-      setFormData({ name: '', email: '', message: '' });
+        setStatus({
+          type: 'success',
+          message: 'Thank you! Your message has been sent successfully.'
+        });
+        setFormData({ name: '', email: '', message: '' });
+      }
     } catch (error) {
       setStatus({
         type: 'error',

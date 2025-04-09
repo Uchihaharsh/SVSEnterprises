@@ -21,7 +21,8 @@ export default defineConfig({
           vendor: ['react', 'react-dom', 'react-router-dom'],
           ui: ['framer-motion', 'lucide-react']
         }
-      }
+      },
+      external: ['@emailjs/browser']
     },
     chunkSizeWarningLimit: 1000,
     target: 'esnext'
