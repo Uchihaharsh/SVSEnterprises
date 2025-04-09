@@ -14,9 +14,10 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: true,
+    emptyOutDir: true,
     rollupOptions: {
       input: {
-        main: path.resolve(__dirname, 'index.html'),
+        app: path.resolve(__dirname, 'index.html')
       },
       output: {
         manualChunks: {
@@ -29,9 +30,16 @@ export default defineConfig({
     target: 'esnext'
   },
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src')
-    }
+    alias: [
+      {
+        find: /^~/,
+        replacement: ''
+      },
+      {
+        find: '@',
+        replacement: path.resolve(__dirname, 'src')
+      }
+    ]
   },
   optimizeDeps: {
     exclude: ['lucide-react']
