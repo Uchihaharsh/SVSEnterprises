@@ -1,7 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Phone, Mail, MapPin } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 const ContactPage = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [status, setStatus] = useState({
+    type: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setStatus({ type: '', message: '' });
+
+    try {
+      await emailjs.send(
+        'service_74k6tev', // Service ID
+        'template_e8paquj', // Template ID
+        {
+          to_email: 'agnikawach.maharastra@gmail.com',
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+        },
+        'YOPEMqoFXLz9tAcJg' // Public Key
+      );
+
+      setStatus({
+        type: 'success',
+        message: 'Thank you! Your message has been sent successfully.'
+      });
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      setStatus({
+        type: 'error',
+        message: 'Oops! Something went wrong. Please try again later.'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="pt-24">
       <section className="py-20 bg-white">
@@ -57,7 +109,15 @@ const ContactPage = () => {
 
             <div className="bg-gray-50 p-8 rounded-lg">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h3>
-              <form className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {status.message && (
+                  <div className={`p-4 rounded-md ${
+                    status.type === 'success' ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'
+                  }`}>
+                    {status.message}
+                  </div>
+                )}
+                
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                     Name
@@ -65,6 +125,9 @@ const ContactPage = () => {
                   <input
                     type="text"
                     id="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
                   />
                 </div>
@@ -76,6 +139,9 @@ const ContactPage = () => {
                   <input
                     type="email"
                     id="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
                   />
                 </div>
@@ -87,15 +153,21 @@ const ContactPage = () => {
                   <textarea
                     id="message"
                     rows={4}
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500"
                   ></textarea>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full bg-red-600 text-white px-6 py-3 rounded-md hover:bg-red-700 transition-colors"
+                  disabled={isSubmitting}
+                  className={`w-full bg-red-600 text-white px-6 py-3 rounded-md transition-colors ${
+                    isSubmitting ? 'opacity-75 cursor-not-allowed' : 'hover:bg-red-700'
+                  }`}
                 >
-                  Send Message
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
             </div>
