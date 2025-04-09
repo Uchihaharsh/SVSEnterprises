@@ -8,17 +8,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  root: '.',
-  base: './',
+  base: '/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: true,
     emptyOutDir: true,
     rollupOptions: {
-      input: {
-        app: path.resolve(__dirname, 'index.html')
-      },
+      input: path.resolve(__dirname, 'index.html'),
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
@@ -30,19 +27,12 @@ export default defineConfig({
     target: 'esnext'
   },
   resolve: {
-    alias: [
-      {
-        find: /^~/,
-        replacement: ''
-      },
-      {
-        find: '@',
-        replacement: path.resolve(__dirname, 'src')
-      }
-    ]
+    alias: {
+      '@': path.resolve(__dirname, './src')
+    }
   },
   optimizeDeps: {
-    exclude: ['lucide-react']
+    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion', 'lucide-react']
   },
   server: {
     port: 5173,
