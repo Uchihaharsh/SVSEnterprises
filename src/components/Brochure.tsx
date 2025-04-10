@@ -1,4 +1,3 @@
-import React from 'react';
 import { FileDown, Download } from 'lucide-react';
 
 const Brochure = () => {
