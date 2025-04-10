@@ -64,9 +64,9 @@ const Navbar = () => {
               <span>+91 9167150521</span>
             </a>
           </div>
-          <a href="mailto:agnikawach.maharastra@gmail.com" className="flex items-center space-x-2 text-gray-600 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 transition-colors">
-            <Mail size={14} />
-            <span>agnikawach.maharastra@gmail.com</span>
+          <a href="mailto:agnikawach.maharashtra@gmail.com" className="flex items-center space-x-2 text-gray-600 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 transition-colors">
+            <Mail className="w-5 h-5" />
+            <span>agnikawach.maharashtra@gmail.com</span>
           </a>
         </div>
 
