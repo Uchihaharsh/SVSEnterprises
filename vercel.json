@@ -3,7 +3,6 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "installCommand": "npm install",
   "routes": [
     {
       "src": "/assets/(.*)",
@@ -13,38 +12,13 @@
       "continue": true
     },
     {
-      "src": "/(.*)\\.(?:ico|png|jpg|jpeg|gif|svg|webp)$",
-      "headers": {
-        "cache-control": "public, max-age=31536000, immutable"
-      },
-      "continue": true
-    },
-    {
-      "src": "/(.*)\\.(?:js|css|json)$",
-      "headers": {
-        "cache-control": "public, max-age=31536000, immutable"
-      },
-      "continue": true
-    },
-    {
       "handle": "filesystem"
     },
     {
-      "src": "/(.*)",
-      "dest": "/index.html",
-      "headers": {
-        "cache-control": "public, max-age=0, must-revalidate"
-      }
+      "src": "/.*",
+      "dest": "/index.html"
     }
   ],
-  "env": {
-    "VITE_NODE_ENV": "production",
-    "VITE_BASE_URL": "/"
-  },
-  "github": {
-    "enabled": true,
-    "silent": true
-  },
   "headers": [
     {
       "source": "/(.*)",

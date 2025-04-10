@@ -10,19 +10,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react({
-      jsxRuntime: 'automatic',
-      jsxImportSource: 'react',
-      babel: {
-        plugins: [
-          ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }]
-        ]
-      }
-    }),
+    react(),
     viteCompression({
-      verbose: true,
-      disable: false,
-      threshold: 10240,
       algorithm: 'gzip',
       ext: '.gz',
     }),
@@ -32,73 +21,45 @@ export default defineConfig({
       manifest: {
         name: 'SVS Enterprises',
         short_name: 'SVS',
-        description: 'SVS Enterprises - Your trusted partner in fire safety solutions',
         theme_color: '#ffffff',
-        start_url: '/',
         icons: [
           {
-            src: 'pwa-192x192.png',
+            src: '/android-chrome-192x192.png',
             sizes: '192x192',
-            type: 'image/png'
+            type: 'image/png',
           },
           {
-            src: 'pwa-512x512.png',
+            src: '/android-chrome-512x512.png',
             sizes: '512x512',
             type: 'image/png',
-            purpose: 'any maskable'
-          }
-        ]
-      }
-    })
+          },
+        ],
+      },
+    }),
   ],
-  base: './',
+  base: '/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
-    sourcemap: false,
+    sourcemap: true,
     minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true
-      }
-    },
     rollupOptions: {
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
-          ui: ['framer-motion', 'lucide-react']
+          ui: ['framer-motion', 'lucide-react'],
         },
-        chunkFileNames: 'assets/js/[name]-[hash].js',
-        entryFileNames: 'assets/js/[name]-[hash].js',
-        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]'
-      }
+      },
     },
-    target: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14'],
-    cssCodeSplit: true,
-    assetsInlineLimit: 4096,
-    chunkSizeWarningLimit: 1000,
-    emptyOutDir: true
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
-    }
-  },
-  optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion', 'lucide-react']
+      '@': path.resolve(__dirname, './src'),
+    },
   },
   server: {
-    port: 5173,
+    port: 3000,
     host: true,
-    strictPort: true,
-    hmr: {
-      port: 5173,
-      overlay: true
-    },
-    watch: {
-      usePolling: true
-    }
   },
   preview: {
     port: 5173,
