@@ -13,14 +13,55 @@
       "continue": true
     },
     {
+      "src": "/(.*)\\.(?:ico|png|jpg|jpeg|gif|svg|webp)$",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "/(.*)\\.(?:js|css|json)$",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      },
+      "continue": true
+    },
+    {
       "handle": "filesystem"
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/index.html",
+      "headers": {
+        "cache-control": "public, max-age=0, must-revalidate"
+      }
     }
   ],
   "env": {
-    "VITE_NODE_ENV": "production"
-  }
+    "VITE_NODE_ENV": "production",
+    "VITE_BASE_URL": "/"
+  },
+  "github": {
+    "enabled": true,
+    "silent": true
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
+    }
+  ]
 } 

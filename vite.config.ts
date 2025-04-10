@@ -10,7 +10,12 @@ export default defineConfig({
   plugins: [
     react({
       jsxRuntime: 'automatic',
-      jsxImportSource: 'react'
+      jsxImportSource: 'react',
+      babel: {
+        plugins: [
+          ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }]
+        ]
+      }
     })
   ],
   base: './',
@@ -18,19 +23,29 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: false,
-    emptyOutDir: true,
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    },
     rollupOptions: {
-      input: path.resolve(__dirname, 'index.html'),
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
           ui: ['framer-motion', 'lucide-react']
-        }
-      },
-      external: ['@emailjs/browser']
+        },
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]'
+      }
     },
+    target: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14'],
+    cssCodeSplit: true,
+    assetsInlineLimit: 4096,
     chunkSizeWarningLimit: 1000,
-    target: 'esnext'
+    emptyOutDir: true
   },
   resolve: {
     alias: {
