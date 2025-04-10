@@ -2,6 +2,8 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import viteCompression from 'vite-plugin-compression';
+import { VitePWA } from 'vite-plugin-pwa';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -14,6 +16,37 @@ export default defineConfig({
       babel: {
         plugins: [
           ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }]
+        ]
+      }
+    }),
+    viteCompression({
+      verbose: true,
+      disable: false,
+      threshold: 10240,
+      algorithm: 'gzip',
+      ext: '.gz',
+    }),
+    VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
+      manifest: {
+        name: 'SVS Enterprises',
+        short_name: 'SVS',
+        description: 'SVS Enterprises - Your trusted partner in fire safety solutions',
+        theme_color: '#ffffff',
+        start_url: '/',
+        icons: [
+          {
+            src: 'pwa-192x192.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: 'pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'any maskable'
+          }
         ]
       }
     })
